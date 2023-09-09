@@ -15,6 +15,12 @@ class Game():
         self.window.mainloop()
 
     def main_game(self):
+        x, y = self.hare.pos
+        self.field[x][y]['text'] = 'h'
+        self.window.update()
+        x2,y2 = self.hare2.pos
+        self.field[x2][y2]['text'] = 'h2'
+        self.window.update()
         while True:
             x, y = self.tiger.pos
             self.field[x][y]['text'] = 't'
@@ -22,7 +28,12 @@ class Game():
             time.sleep(1)
             self.field[x][y]['text'] = ''
             self.window.update()
+            if self.tiger.attack_hare(self.hare.pos):
+                print('h')
+            if self.tiger.attack_hare(self.hare2.pos):
+                print('h2')
             self.tiger.next_pos()
+        
 
     def create_field(self):
         self.window = tk.Tk()
@@ -32,7 +43,8 @@ class Game():
         for i in range(5):
             line = []
             for j in range(5):
-                lb = tk.Label(self.window, text = f'{i+1}-{j+1}')
+                lb = tk.Label(self.window, text = '',
+                              width=5, borderwidth=2, relief='ridge')
                 lb.grid(row = i, column = j)
                 line.append(lb)
             self.field.append(line)

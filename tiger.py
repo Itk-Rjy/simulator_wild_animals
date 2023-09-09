@@ -2,7 +2,7 @@ import random as rd
 
 class Tiger():
     def __init__(self):
-        self.state = ['find', 'attack', 'go_home']
+        self.state = 'find'
         self.pos = [0,0]
 
     def next_pos(self):
@@ -28,6 +28,19 @@ class Tiger():
             if y == -1:
                 y = 1
             self.pos[1] = y
-            
 
+    def attack_hare(self, pos_hare):
+        if pos_hare[1] == self.pos[1]:
+            if abs(pos_hare[0]-self.pos[0]) == 1:
+                self.state  =  'attack'
+                return True
+        if pos_hare[0] == self.pos[0]:
+            if abs(pos_hare[1]-self.pos[1]) == 1:
+                self.state  =  'attack'
+                return True
+        return False
+
+
+
+        
             
