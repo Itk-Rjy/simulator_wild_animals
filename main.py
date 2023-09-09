@@ -2,6 +2,7 @@ import tkinter as tk
 import time
 from tiger import *
 from hare import *
+import random as rd
 
 class Game():
     def __init__(self):
@@ -21,19 +22,32 @@ class Game():
         x2,y2 = self.hare2.pos
         self.field[x2][y2]['text'] = 'h2'
         self.window.update()
+            
         while True:
-            x, y = self.tiger.pos
-            self.field[x][y]['text'] = 't'
-            self.window.update()
-            time.sleep(1)
-            self.field[x][y]['text'] = ''
-            self.window.update()
-            if self.tiger.attack_hare(self.hare.pos):
-                print('h')
-            if self.tiger.attack_hare(self.hare2.pos):
-                print('h2')
-            self.tiger.next_pos()
-        
+            if self.tiger.state == 'find':
+                x, y = self.tiger.pos
+                self.field[x][y]['text'] = 't'
+                self.window.update()
+                time.sleep(1)
+                self.field[x][y]['text'] = ''
+                self.window.update()
+                self.tiger.attack_hare(self.hare.pos)
+                self.tiger.attack_hare(self.hare2.pos)
+                self.tiger.next_pos()
+            elif self.tiger.state == 'attack':
+                self.attack_hare()
+                self.tiger.state = 'go_home'
+            elif self.tiger.state == 'go_home':
+                self.tiger.pos = [0,0]
+                self.field[0][0]['text'] = 't'
+                self.window.update()
+                break
+            
+    def attack_hare(self):
+        if rd.random()>0.5:
+            print('Тигр поймал зайца')
+        else:
+            print('Тигр не поймал зайца')
 
     def create_field(self):
         self.window = tk.Tk()
