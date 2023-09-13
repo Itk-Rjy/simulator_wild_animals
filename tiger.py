@@ -33,12 +33,11 @@ class Tiger():
         if pos_hare[1] == self.pos[1]:
             if abs(pos_hare[0]-self.pos[0]) == 1:
                 self.state  =  'attack'
-                return True
+                return
         if pos_hare[0] == self.pos[0]:
             if abs(pos_hare[1]-self.pos[1]) == 1:
                 self.state  =  'attack'
-                return True
-        return False
+                return
 
 
 
